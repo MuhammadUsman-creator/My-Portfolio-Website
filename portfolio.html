@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Muhammad Usman – Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  /* ── Reset & Variables ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --card: #161616;
+    --yellow: #f5c518;
+    --white: #f0ede8;
+    --muted: #888;
+    --border: rgba(255,255,255,0.07);
+    --radius: 14px;
+    --nav-h: 68px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+  }
+  .nav-logo span { color: var(--yellow); }
+  .nav-links { display: flex; gap: 2rem; font-size: 0.88rem; font-weight: 500; }
+  .nav-links a:hover { color: var(--yellow); }
+  .nav-cta {
+    background: var(--yellow); color: var(--black);
+    padding: 8px 20px; border-radius: 50px;
+    font-weight: 600; font-size: 0.85rem;
+    transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* ── Hero ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: calc(var(--nav-h) + 60px) 7% 80px;
+    gap: 4rem;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
+  .hero-tags span {
+    background: rgba(245,197,24,.12); color: var(--yellow);
+    padding: 4px 12px; border-radius: 50px; font-size: .78rem; font-weight: 600;
+    border: 1px solid rgba(245,197,24,.25);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+  }
+  .hero-title .accent { color: var(--yellow); }
+  .hero-desc { color: #aaa; max-width: 480px; margin-bottom: 2rem; line-height: 1.75; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--yellow); color: var(--black);
+    padding: 14px 32px; border-radius: 50px;
+    font-weight: 700; font-size: .9rem;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,197,24,.3); }
+
+  .hero-img-wrap {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-img-wrap::before {
+    content: '';
+    position: absolute;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(245,197,24,.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-photo {
+    width: 300px; height: 370px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    position: relative; z-index: 1;
+    border: 2px solid var(--border);
+    background: var(--card);
+  }
+  .hero-photo-placeholder {
+    width: 300px; height: 370px;
+    border-radius: var(--radius);
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: .9rem; border: 2px solid var(--border);
+    position: relative; z-index: 1;
+    flex-direction: column; gap: .5rem;
+  }
+  .hero-photo-placeholder svg { opacity: .3; }
+
+  /* Stars */
+  .stars { color: var(--yellow); font-size: .9rem; letter-spacing: 2px; }
+
+  /* Reviews strip */
+  .reviews-strip {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 48px 7%;
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .review-card { padding: 1.2rem; }
+  .review-text { color: #bbb; font-size: .85rem; font-style: italic; margin: .5rem 0; }
+  .review-author { font-size: .8rem; font-weight: 600; color: var(--muted); }
+
+  /* ── Section commons ── */
+  section { padding: 80px 7%; }
+  .section-label {
+    font-size: .75rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--yellow); font-weight: 600; margin-bottom: .5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.2; margin-bottom: 1rem;
+  }
+  .section-sub { color: #999; max-width: 540px; }
+
+  /* ── Recent Projects ── */
+  #projects { background: var(--dark); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem; margin-top: 2.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform .25s, border-color .25s;
+  }
+  .project-card:hover { transform: translateY(-4px); border-color: rgba(245,197,24,.3); }
+  .project-thumb {
+    height: 200px; background: #222;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: .85rem;
+  }
+  .project-info { padding: 1.25rem; }
+  .project-info h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: .4rem; }
+  .project-info p { color: #888; font-size: .84rem; }
+  .project-actions { display: flex; gap: .75rem; margin-top: 1rem; }
+  .btn-outline {
+    padding: 8px 18px; border-radius: 50px;
+    border: 1px solid var(--yellow); color: var(--yellow);
+    font-size: .8rem; font-weight: 600;
+    transition: background .2s, color .2s;
+    cursor: pointer;
+  }
+  .btn-outline:hover { background: var(--yellow); color: var(--black); }
+
+  /* ── About ── */
+  #about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-photo-placeholder {
+    width: 100%; aspect-ratio: 4/5;
+    background: var(--card); border-radius: var(--radius);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: .9rem; flex-direction: column; gap: .5rem;
+  }
+  .name-badge {
+    position: absolute; bottom: -1.5rem; right: -1.5rem;
+    background: var(--yellow); color: var(--black);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 700;
+  }
+  .name-badge small { display: block; font-size: .7rem; font-weight: 400; }
+  .social-row { display: flex; gap: 1rem; margin-top: 1.5rem; }
+  .social-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; transition: border-color .2s, color .2s;
+    cursor: pointer;
+  }
+  .social-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  /* ── Experience ── */
+  #experience { background: var(--dark); }
+  .exp-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    margin-top: 2rem;
+  }
+  .exp-card {
+    background: var(--card); border-radius: var(--radius);
+    padding: 1.5rem; border: 1px solid var(--border);
+    border-left: 3px solid var(--yellow);
+  }
+  .exp-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .3rem; }
+  .exp-date { font-size: .78rem; color: var(--yellow); font-weight: 600; margin-bottom: .6rem; }
+  .exp-card p { color: #999; font-size: .85rem; }
+
+  /* Contact aside */
+  .contact-aside {
+    background: var(--card); border-radius: var(--radius);
+    padding: 1.5rem; border: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  .contact-aside h3 { color: var(--yellow); font-size: 1rem; margin-bottom: 1rem; }
+  .contact-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; }
+  .contact-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(245,197,24,.12); color: var(--yellow);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; flex-shrink: 0;
+  }
+  .contact-row span { font-size: .85rem; color: #aaa; }
+
+  /* ── Services ── */
+  #services { background: var(--black); }
+  .services-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+    margin-top: 2rem; align-items: start;
+  }
+  .service-accordion-item {
+    border-bottom: 1px solid var(--border); overflow: hidden;
+  }
+  .service-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 0; cursor: pointer; font-weight: 600;
+    transition: color .2s;
+  }
+  .service-header:hover { color: var(--yellow); }
+  .service-header .icon {
+    width: 28px; height: 28px;
+    background: var(--yellow); color: var(--black);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; flex-shrink: 0; transition: transform .2s;
+  }
+  .service-header.open .icon { transform: rotate(45deg); }
+  .service-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height .35s ease, padding .3s;
+    color: #999; font-size: .88rem; padding: 0;
+  }
+  .service-body.open { max-height: 200px; padding-bottom: 1rem; }
+  .service-body ul { padding-left: 1.2rem; line-height: 2; }
+  .services-cta-side { padding-top: 1rem; }
+  .services-cta-side h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; margin-bottom: .75rem;
+  }
+  .services-cta-side p { color: #999; font-size: .9rem; margin-bottom: 1.5rem; }
+
+  /* ── Featured Work ── */
+  #featured { background: var(--dark); }
+  .featured-layout {
+    display: grid; grid-template-columns: 1fr 1.6fr; gap: 3rem;
+    align-items: start; margin-top: 2rem;
+  }
+  .featured-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem); margin-bottom: 1rem;
+  }
+  .featured-left p { color: #999; font-size: .9rem; margin-bottom: 1.5rem; }
+  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .work-card {
+    background: var(--card); border-radius: var(--radius);
+    overflow: hidden; border: 1px solid var(--border);
+    transition: transform .25s, border-color .25s;
+  }
+  .work-card:hover { transform: translateY(-4px); border-color: rgba(245,197,24,.3); }
+  .work-thumb {
+    height: 140px; background: #222;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; color: var(--muted);
+  }
+  .work-thumb.ecom { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+  .work-thumb.real { background: linear-gradient(135deg, #0f3460, #162447); }
+  .work-info { padding: 1rem; }
+  .work-info h4 { font-size: .95rem; font-weight: 600; margin-bottom: .3rem; }
+  .work-info p { color: #888; font-size: .8rem; }
+
+  /* ── Testimonials ── */
+  #testimonials { background: var(--black); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .test-card {
+    background: var(--card); border-radius: var(--radius);
+    padding: 1.5rem; border: 1px solid var(--border);
+    transition: border-color .25s;
+  }
+  .test-card:hover { border-color: rgba(245,197,24,.3); }
+  .test-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--yellow); color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .9rem; margin-bottom: .8rem;
+  }
+  .test-name { font-weight: 600; font-size: .95rem; }
+  .test-role { color: var(--muted); font-size: .78rem; margin-bottom: .75rem; }
+  .test-text { color: #bbb; font-size: .85rem; line-height: 1.7; }
+
+  /* ── FAQ ── */
+  #faq { background: var(--dark); }
+  .faq-layout {
+    display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 4rem; margin-top: 2rem; align-items: start;
+  }
+  .faq-label { font-size: .75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--yellow); margin-bottom: .5rem; }
+  .faq-title { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; }
+  .faq-sub { color: #999; font-size: .9rem; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 0; cursor: pointer; font-weight: 500; font-size: .9rem;
+  }
+  .faq-q:hover { color: var(--yellow); }
+  .faq-q .chevron { transition: transform .3s; }
+  .faq-q.open .chevron { transform: rotate(180deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden; transition: max-height .35s ease;
+    color: #999; font-size: .87rem;
+  }
+  .faq-a.open { max-height: 120px; padding-bottom: .75rem; }
+
+  /* ── CTA Banner ── */
+  #cta {
+    background: var(--yellow);
+    color: var(--black);
+    text-align: center;
+    padding: 80px 7%;
+  }
+  #cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); margin-bottom: .75rem;
+  }
+  #cta p { max-width: 500px; margin: 0 auto 2rem; font-size: .95rem; }
+  .btn-dark {
+    display: inline-block;
+    background: var(--black); color: var(--yellow);
+    padding: 14px 36px; border-radius: 50px;
+    font-weight: 700; font-size: .9rem;
+    transition: opacity .2s;
+  }
+  .btn-dark:hover { opacity: .85; }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 2rem 7%;
+    color: var(--muted);
+    font-size: .83rem;
+  }
+  footer strong { color: var(--yellow); }
+
+  /* ── Animations ── */
+  .fade-up {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    #hero, #about, .exp-grid, .services-layout, .featured-layout, .faq-layout {
+      grid-template-columns: 1fr;
+    }
+    .hero-img-wrap { display: none; }
+    #about { gap: 2.5rem; }
+    .reviews-strip, .testimonials-grid { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">📁 <span>Portfolio</span></div>
+  <div class="nav-links">
+    <a href="#hero">Home</a>
+    <a href="#about">About Me</a>
+    <a href="#projects">Projects</a>
+    <a href="#cta">Book A Website</a>
+  </div>
+  <a href="#cta" class="nav-cta">Book A Website</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="fade-up">
+    <div class="hero-tags">
+      <span>#WordPress</span>
+      <span>#Design</span>
+      <span>#UI Design</span>
+      <span>#Astra</span>
+    </div>
+    <h1 class="hero-title">Muhammad<br><span class="accent">Usman</span></h1>
+    <p class="hero-desc">
+      Welcome to my portfolio! I'm Muhammad Usman, a web designer &amp; developer from Pakistan with 3+ years of experience. I craft visually stunning, functional websites that deliver exceptional user experiences.
+    </p>
+    <a href="#cta" class="btn-primary">Start A Project Now →</a>
+  </div>
+  <div class="hero-img-wrap fade-up">
+    <div class="hero-photo-placeholder">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span>Muhammad Usman</span>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS STRIP -->
+<div class="reviews-strip">
+  <div class="review-card fade-up">
+    <div class="stars">★★★★★</div>
+    <p class="review-text">"Professional, reliable, and turned my vision into a digital reality."</p>
+    <span class="review-author">— Client A</span>
+  </div>
+  <div class="review-card fade-up">
+    <div class="stars">★★★★★</div>
+    <p class="review-text">"Brilliant developer who meets every deadline with high-quality results."</p>
+    <span class="review-author">— Client B</span>
+  </div>
+  <div class="review-card fade-up">
+    <div class="stars">★★★★★</div>
+    <p class="review-text">"Exceeded expectations. The website is perfect and fast."</p>
+    <span class="review-author">— Client C</span>
+  </div>
+</div>
+
+<!-- RECENT PROJECTS -->
+<section id="projects">
+  <p class="section-label">Portfolio</p>
+  <h2 class="section-title fade-up">Recent Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card fade-up">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">
+        <span>🎨 Graphic Designer Portfolio</span>
+      </div>
+      <div class="project-info">
+        <h3>Graphic Designer Portfolio</h3>
+        <p>A creative, minimal portfolio for a graphic designer showcasing branding and illustration work.</p>
+        <div class="project-actions">
+          <a href="#" class="btn-outline">View Project</a>
+          <a href="#projects" class="btn-outline" style="border-color:var(--muted);color:var(--muted)">Explore More</a>
+        </div>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#0f3460,#533483);">
+        <span>🏠 Real Estate Website</span>
+      </div>
+      <div class="project-info">
+        <h3>Real Estate Website</h3>
+        <p>A full-featured real estate site with property listings and lead capture forms.</p>
+        <div class="project-actions">
+          <a href="#" class="btn-outline">View Project</a>
+        </div>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#2d1b69,#11998e);">
+        <span>🛒 E-Commerce Store</span>
+      </div>
+      <div class="project-info">
+        <h3>E-Commerce Store</h3>
+        <p>Secure WooCommerce store built for sales and seamless checkout experiences.</p>
+        <div class="project-actions">
+          <a href="#" class="btn-outline">View Project</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-wrap fade-up">
+    <div class="about-photo-placeholder">
+      <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <span>Muhammad Usman</span>
+    </div>
+    <div class="name-badge">
+      Muhammad Usman
+      <small>Web Designer &amp; Developer</small>
+    </div>
+    <div class="social-row" style="margin-top:3.5rem;">
+      <div class="social-btn">f</div>
+      <div class="social-btn">in</div>
+      <div class="social-btn">tw</div>
+      <div class="social-btn">yt</div>
+    </div>
+  </div>
+  <div class="fade-up">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">Passionate Lead<br>Web Developer</h2>
+    <p style="color:#aaa;margin-bottom:1.5rem;">
+      I'm Muhammad Usman, a Pakistan-based Web Developer passionate about crafting intuitive, user-centered experiences. I've completed 50+ projects turning complex ideas into seamless interfaces.
+    </p>
+    <p style="color:#777;font-size:.88rem;margin-bottom:2rem;">
+      My routine involves developing high-performance websites, optimizing code architecture, conducting rigorous testing, and collaborating with teams to build scalable, resilient digital products.
+    </p>
+    <a href="#projects" class="btn-primary">View About Me →</a>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;align-items:start;">
+    <div>
+      <p class="section-label">Career</p>
+      <h2 class="section-title fade-up">Experiences</h2>
+      <div class="exp-grid">
+        <div class="exp-card fade-up">
+          <p class="exp-date">2021 – Present</p>
+          <h3>Web Developer</h3>
+          <p>Developing high-performance websites, optimizing code architecture, conducting rigorous testing, and collaborating with teams to build scalable digital products.</p>
+        </div>
+        <div class="exp-card fade-up">
+          <p class="exp-date">2023 – Present</p>
+          <h3>UI/UX Designer</h3>
+          <p>Crafting intuitive interfaces, optimizing user flows, and translating complex designs into pixel-perfect code while collaborating with teams to deliver engaging digital experiences.</p>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up">
+      <div class="contact-aside">
+        <h3>Contact</h3>
+        <div class="contact-row">
+          <div class="contact-icon">✉</div>
+          <span>muhammadDev@gmail.com</span>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📞</div>
+          <span>+92 300 0000000</span>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;padding:1.5rem;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);">
+        <h3 style="color:var(--yellow);font-size:.95rem;margin-bottom:.75rem;">Experience the Impact of User-Centered Design</h3>
+        <p style="color:#888;font-size:.85rem;">Experience the magic of user-centered design. I craft intuitive and engaging digital solutions that put users first and elevate brands.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-layout">
+    <div>
+      <p class="section-label">What I Offer</p>
+      <h2 class="section-title fade-up">My Services</h2>
+      <div id="accordion">
+        <div class="service-accordion-item">
+          <div class="service-header open" onclick="toggleAccordion(this)">
+            <span>Website Rebirth &amp; Cloning</span>
+            <div class="icon">+</div>
+          </div>
+          <div class="service-body open">
+            <ul>
+              <li>Bringing Dreams to Reality</li>
+              <li>Redesign &amp; modern UI refresh</li>
+              <li>1:1 website cloning for migration</li>
+            </ul>
+          </div>
+        </div>
+        <div class="service-accordion-item">
+          <div class="service-header" onclick="toggleAccordion(this)">
+            <span>Web Development</span>
+            <div class="icon">+</div>
+          </div>
+          <div class="service-body">
+            <ul>
+              <li>Custom WordPress Design</li>
+              <li>WooCommerce Store Setup</li>
+              <li>Custom Portfolio Setup</li>
+            </ul>
+          </div>
+        </div>
+        <div class="service-accordion-item">
+          <div class="service-header" onclick="toggleAccordion(this)">
+            <span>Website Optimization</span>
+            <div class="icon">+</div>
+          </div>
+          <div class="service-body">
+            <ul>
+              <li>Speed &amp; performance tuning</li>
+              <li>SEO on-page optimization</li>
+              <li>Core Web Vitals improvement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="services-cta-side fade-up">
+      <h3>Experience the Impact of<br>User-Centered Design</h3>
+      <p>Experience the magic of user-centered design. I craft intuitive and engaging digital solutions that put users first and elevate brands.</p>
+      <a href="#cta" class="btn-primary">Start A Project →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED WORK -->
+<section id="featured">
+  <div class="featured-layout">
+    <div class="featured-left fade-up">
+      <p class="section-label">Portfolio</p>
+      <h2>Showcasing My Work for Your Inspiration</h2>
+      <p>Discover a showcase of digital creativity. I craft innovative UI/UX design and web projects crafted to inspire your next big idea.</p>
+      <a href="#projects" class="btn-primary">Explore All Projects ↗</a>
+    </div>
+    <div>
+      <div class="work-grid">
+        <div class="work-card fade-up">
+          <div class="work-thumb ecom">🛒 E-Commerce</div>
+          <div class="work-info">
+            <h4>E-Commerce Store</h4>
+            <p>Secure online store designed to boost sales and simplify checkout experiences.</p>
+          </div>
+        </div>
+        <div class="work-card fade-up">
+          <div class="work-thumb real">🏠 Real Estate</div>
+          <div class="work-info">
+            <h4>Real Estate Website</h4>
+            <p>CRO-integrated website to showcase properties and turn visits into active leads.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <p class="section-label">Client Feedback</p>
+  <h2 class="section-title fade-up">What My Clients Say</h2>
+  <p class="section-sub" style="margin-bottom:0;">Real feedback from clients who trusted me for WordPress development.</p>
+  <div class="testimonials-grid">
+    <div class="test-card fade-up">
+      <div class="test-avatar">R</div>
+      <div class="test-name">Robert J.</div>
+      <div class="test-role">Business Owner</div>
+      <div class="stars" style="font-size:.8rem;margin-bottom:.5rem;">★★★★★</div>
+      <p class="test-text">The WordPress website was delivered with excellent speed of execution, clean design, and perfect responsiveness across all devices. Truly professional work.</p>
+    </div>
+    <div class="test-card fade-up">
+      <div class="test-avatar">J</div>
+      <div class="test-name">Janine Z.</div>
+      <div class="test-role">Marketing Manager</div>
+      <div class="stars" style="font-size:.8rem;margin-bottom:.5rem;">★★★★★</div>
+      <p class="test-text">My WordPress landing page was designed quickly with great detail — satisfying layout, and custom displays that perfectly matched my brand identity.</p>
+    </div>
+    <div class="test-card fade-up">
+      <div class="test-avatar">J</div>
+      <div class="test-name">Justin B.</div>
+      <div class="test-role">Startup Founder</div>
+      <div class="stars" style="font-size:.8rem;margin-bottom:.5rem;">★★★★★</div>
+      <p class="test-text">The WordPress site has performance-improved and SEO-optimized code, better core web vitals, and excellent user experience across all pages.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-layout">
+    <div class="fade-up">
+      <p class="faq-label">Support</p>
+      <h2 class="faq-title">FAQs</h2>
+      <p class="faq-sub">Have any questions? We've listed the ones most frequently asked.</p>
+    </div>
+    <div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How will I receive my work? <span class="chevron">▾</span></div>
+        <div class="faq-a">You'll receive all files via email or a shared Google Drive link within 24 hours of completion.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What information do you need to get started? <span class="chevron">▾</span></div>
+        <div class="faq-a">A brief about your business, goals, references, and any branding materials you have.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Do you offer revisions if I'm not satisfied? <span class="chevron">▾</span></div>
+        <div class="faq-a">Absolutely. I offer up to 3 rounds of revisions to ensure you're 100% happy with the result.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How do we communicate during the project? <span class="chevron">▾</span></div>
+        <div class="faq-a">Via WhatsApp, email, or any platform you prefer. I'm responsive and keep you updated.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Is the data and information secure with you? <span class="chevron">▾</span></div>
+        <div class="faq-a">Yes. All your data is kept strictly confidential and never shared with third parties.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Do you provide support after a complaint? <span class="chevron">▾</span></div>
+        <div class="faq-a">Yes, post-delivery support is included for 7 days. Beyond that, maintenance packages are available.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta">
+  <h2>Surround Yourself<br>With An Expert</h2>
+  <p>Ready to start your project? Let's build something extraordinary together.</p>
+  <a href="mailto:muhammadDev@gmail.com" class="btn-dark">Start A Project Now →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Copyright 2024 Portfolio | Powered by Astra · Developed by <strong>Muhammad Usman</strong></p>
+</footer>
+
+<script>
+  // Accordion
+  function toggleAccordion(header) {
+    const body = header.nextElementSibling;
+    const isOpen = header.classList.contains('open');
+    document.querySelectorAll('.service-header').forEach(h => h.classList.remove('open'));
+    document.querySelectorAll('.service-body').forEach(b => b.classList.remove('open'));
+    if (!isOpen) {
+      header.classList.add('open');
+      body.classList.add('open');
+    }
+  }
+
+  // FAQ
+  function toggleFaq(item) {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    const isOpen = q.classList.contains('open');
+    q.classList.toggle('open', !isOpen);
+    a.classList.toggle('open', !isOpen);
+  }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
